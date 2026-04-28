@@ -6,7 +6,7 @@ class Product:
         self.quantity = quantity
 
     def total_value(self):
-        return self.price * self.quantity + 1
+        return self.price * self.quantity
 
     def apply_discount(self, percent: float):
         self.price = self.price * (1 - percent / 100)
