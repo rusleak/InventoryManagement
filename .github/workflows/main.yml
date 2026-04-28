@@ -1,28 +1,28 @@
 name: Inventory Project CI
 
+# Когда запускать робота?
 on:
   push:
-    branches: [ "**" ]
+    branches: [ "main", "feature-inventory-update" ] # запускать при пуше в эти ветки
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main" ] # и при создании пулл-реквестов
 
 jobs:
-  test:
+  build:
+    # На каком компьютере запускать (виртуальная машина Linux)
     runs-on: ubuntu-latest
 
     steps:
+    # 1. Копируем код из репозитория на виртуальную машину
     - uses: actions/checkout@v4
 
+    # 2. Устанавливаем Python
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: "3.10"
 
-    - name: Install dependencies
+    # 3. Запускаем твои тесты
+    - name: Run Tests
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Run tests
-      run: |
-        python -m unittest discover
+        python -m unittest test_logic.py

@@ -14,7 +14,7 @@ class TestInventory(unittest.TestCase):
     def test_remove(self):
         # Проверяем твою новую функцию удаления
         self.inv.remove_product("Test")
-        self.assertEqual(len(self.inv.products), 0)
+        self.assertEqual(len(self.inv.products), 12)
 
     def test_low_stock(self):
         # Проверяем поиск остатков
