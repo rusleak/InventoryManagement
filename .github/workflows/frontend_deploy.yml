@@ -9,11 +9,16 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: 'frontend' # ЗАМЕНИ НА СВОЕ
+  # Имя взято из твоей ссылки: https://frontend-e0e4fzaefvera4ct...
+  AZURE_WEBAPP_NAME: 'frontend-e0e4fzaefvera4ct'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,6 +34,10 @@ jobs:
         run: |
           cd frontend
           zip -r ../frontend_release.zip .
+          # Точка выше критически важна!
+
+      - name: Check zip content (Debug)
+        run: unzip -l frontend_release.zip
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
