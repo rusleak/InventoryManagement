@@ -1,4 +1,4 @@
-const API="REPLACE_LATER";
+const API="https://functions-app01-b6gncbafdgfta9cs.italynorth-01.azurewebsites.net";
 
 
 async function loadProducts(){

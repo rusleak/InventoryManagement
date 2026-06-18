@@ -25,4 +25,5 @@ jobs:
     - name: Run Tests
       working-directory: backend
       run: |
+        pip install -r requirements.txt
         python -m unittest test_logic.py
