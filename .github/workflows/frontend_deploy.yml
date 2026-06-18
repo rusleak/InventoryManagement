@@ -28,7 +28,7 @@ jobs:
       - name: Zip frontend files
         run: |
           cd frontend
-          zip -r ../frontend_release.zip
+          zip -r ../frontend_release.zip .
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
