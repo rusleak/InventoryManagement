@@ -1,33 +1,32 @@
-const API="https://functions-app01-b6gncbafdgfta9cs.italynorth-01.azurewebsites.net";
+const API = "https://functions-app01-b6gncbafdgfta9cs.italynorth-01.azurewebsites.net";
 
+async function loadProducts() {
+    const response = await fetch(`${API}/api/products`);
+    const data = await response.json();
 
-async function loadProducts(){
+    const tbody = document.getElementById("products");
+    tbody.innerHTML = "";
 
-    const response=await fetch(
-        `${API}/api/products`
-    );
+    data.forEach(p => {
+        const row = document.createElement("tr");
 
-    const data=await response.json();
+        const total = p.price * p.quantity;
 
-    document.getElementById(
-        "output"
-    ).innerText=
-    JSON.stringify(data,null,2);
+        row.innerHTML = `
+            <td>${p.name}</td>
+            <td>${p.price.toFixed(2)}</td>
+            <td>${p.quantity}</td>
+            <td>${total.toFixed(2)}</td>
+        `;
 
+        tbody.appendChild(row);
+    });
 }
 
+async function loadTotal() {
+    const response = await fetch(`${API}/api/total`);
+    const data = await response.json();
 
-async function loadTotal(){
-
-    const response=await fetch(
-        `${API}/api/total`
-    );
-
-    const data=await response.json();
-
-    document.getElementById(
-        "output"
-    ).innerText=
-    "Total: "+data.total;
-
+    document.getElementById("total").innerText =
+        `Total: ${data.total.toFixed(2)} PLN`;
 }

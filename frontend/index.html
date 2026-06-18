@@ -1,23 +1,111 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
-<title>Inventory App</title>
+    <meta charset="UTF-8">
+    <title>Inventory Dashboard</title>
+
+    <style>
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background: #3b82f6;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+.card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #334155;
+}
+
+th {
+    color: #93c5fd;
+}
+
+.total-card {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+    </style>
 </head>
 
 <body>
 
-<h1>Inventory System</h1>
+<div class="container">
 
-<button onclick="loadProducts()">
-Load Products
-</button>
+    <h1>Inventory Dashboard</h1>
 
-<button onclick="loadTotal()">
-Total Value
-</button>
+    <div class="actions">
+        <button onclick="loadProducts()">Load Products</button>
+        <button onclick="loadTotal()">Total Value</button>
+    </div>
 
-<pre id="output"></pre>
+    <div class="card">
+        <h2>Products</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="products"></tbody>
+        </table>
+    </div>
+
+    <div class="card total-card">
+        <h2 id="total">Total: 0 PLN</h2>
+    </div>
+
+</div>
 
 <script src="app.js"></script>
 
