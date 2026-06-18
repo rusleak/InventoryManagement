@@ -9,16 +9,11 @@ on:
   workflow_dispatch:
 
 env:
-  # Имя взято из твоей ссылки: https://frontend-e0e4fzaefvera4ct...
   AZURE_WEBAPP_NAME: 'frontend-e0e4fzaefvera4ct'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -30,17 +25,14 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FBCA947AEDC14131BFF47957C6F757D9 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_ACFC626B9FA741C4ACAC7C4D643C6E3B }}
 
-      - name: Zip frontend files
+      - name: Prepare Frontend Artifact
         run: |
+          # Заходим в папку фронтенда и зипуем только её содержимое в корень архива
           cd frontend
-          zip -r ../frontend_release.zip .
-          # Точка выше критически важна!
-
-      - name: Check zip content (Debug)
-        run: unzip -l frontend_release.zip
+          zip -r ../frontend_only.zip . 
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: frontend_release.zip
+          package: frontend_only.zip
