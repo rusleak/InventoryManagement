@@ -11,8 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy static site
+      - name: Zip frontend
+        run: zip -r frontend.zip frontend/*
+
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'frontend'
-          package: frontend
+          package: frontend.zip
