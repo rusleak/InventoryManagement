@@ -25,6 +25,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FBCA947AEDC14131BFF47957C6F757D9 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_ACFC626B9FA741C4ACAC7C4D643C6E3B }}
 
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt
+
       - name: Prepare Frontend Artifact
         run: |
           # Заходим в папку фронтенда и зипуем только её содержимое в корень архива
