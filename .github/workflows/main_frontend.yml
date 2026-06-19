@@ -1,4 +1,4 @@
-name: Deploy frontend to Azure Web App
+name: Deploy Functions
 
 on:
   push:
@@ -11,18 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Zip frontend
-        run: zip -r frontend.zip frontend/*
-
-      - name: Login to Azure
-        uses: azure/login@v2
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0D0A6850D8B349D6BCEA37829429B463 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5B8DF26EE6A844C3BA4DF4F8C7654A58 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1333DD72C268454F89116560C1B8ADBE }}
+          python-version: 3.11
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: Zip backend
+        run: cd backend && zip -r ../release.zip .
+
+      - name: Deploy Functions
+        uses: Azure/functions-action@v1
         with:
-          app-name: 'frontend'
-          package: frontend.zip
+          app-name: functions-app01
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          package: release.zip
